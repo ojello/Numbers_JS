@@ -14,10 +14,11 @@
 
 
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
-document.querySelector('.number').textContent = secretNumber;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
+let score = 20;
+let highscore = 0;
 
-
+// document.querySelector('.number').textContent = secretNumber;
 
 
 // function - eventHandler will handle the click
@@ -39,13 +40,21 @@ document.querySelector('.check').addEventListener('click', function () {
     } else if (guess === secretNumber) {
         document.querySelector('.message').textContent = '🥳 Correct Number 🦄';
 
+        // display secret number if player guesses right
+        document.querySelector('.number').textContent = secretNumber;
+
+
         // // changing the background with CSS style
         document.querySelector('body').style.backgroundColor = '#dda0dd';
 
         document.querySelector('.number').style.width = '30rem';
 
-        // guess is greater than secretNumber
+        if(score > highscore){
+            highscore = score;
+            document.querySelector('.highscore').textContent = highscore;
+        }
 
+        // guess is greater than secretNumber
     } else if (guess > secretNumber) {
         if (score > 1) {
 
@@ -69,7 +78,24 @@ document.querySelector('.check').addEventListener('click', function () {
         } else {
             document.querySelector('.message').textContent = 'You LOST The Game! 💩'
             document.querySelector('.score').textContent = 0;
-        }
+        } 
     }
+});
+
+document.querySelector('.again').addEventListener('click', function(){
+    // reset score to 20
+    score = 20;
+    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    document.querySelector('.score').textContent = 20;
+    document.querySelector('.message').textContent = 'Start guessing...';
+    document.querySelector('.number').textContent = '?';
+    // to add absence of any value
+    document.querySelector('.guess').value = '';
+
+// restore bg color
+    document.querySelector('body').style.backgroundColor = 'lightblue';
+    // restore box size
+    document.querySelector('.number').style.width = '15rem';
+
 });
 
